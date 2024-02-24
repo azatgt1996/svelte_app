@@ -15,13 +15,13 @@
 	$: promise = getAll('products', $size);
 </script>
 
-<div style="max-width: 350px; margin: 0 auto">
+<div class="max-w-md m-auto">
 	<Label
 		>Products count
 		<Select class="mb-5" items={sizes} bind:value={$size} />
 	</Label>
 	{#await promise}
-		<Spinner style="margin: 20px auto;" />
+		<Spinner class="m-auto" />
 		<P>Products is loading ...</P>
 	{:then list}
 		{#each list as item (item.id)}

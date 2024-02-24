@@ -33,7 +33,7 @@
 	}
 </script>
 
-<div style="max-width: 300px; margin: 10px auto;">
+<div class="max-w-sm m-auto">
 	<form on:submit={submit}>
 		<Label class="mb-2">Login
 			<Input bind:value={form.login} placeholder="john" required />

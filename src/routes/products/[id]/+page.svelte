@@ -15,7 +15,7 @@
 	});
 </script>
 
-<div style="max-width: 500px; margin: 0 auto">
+<div class="max-w-md m-auto">
 	<Button class="mb-1 mt-1" href="/products">
 		<ArrowLeft class="me-3"/>
 		Go back

@@ -3,11 +3,12 @@
 	import { page } from '$app/stores';
 	import { Navbar, NavBrand, NavUl, NavLi, DarkMode, P, Avatar,
            Dropdown, DropdownHeader, DropdownItem, DropdownDivider } from 'flowbite-svelte';
+	import { Toaster } from 'svelte-french-toast';
 
 	$: activeUrl = $page.url.pathname;
 </script>
 
-<Navbar class="fixed" color="dark" style="z-index: 1000" >
+<Navbar class="fixed z-[100]" color="dark" >
 	<NavBrand href="/">
 		<img src="favicon.png" class="me-3 h-9" alt="Logo" />
 		<P size="2xl" weight="bold">MyApp</P>
@@ -34,6 +35,7 @@
   </Dropdown>
 </Navbar>
 
-<div style="padding-top: 90px">
+<Toaster position="top-end"/>
+<div class="pt-20">
   <slot />
 </div>

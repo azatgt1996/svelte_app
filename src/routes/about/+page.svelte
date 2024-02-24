@@ -7,7 +7,7 @@
 	const genId = () => ($uuid = nanoid());
 </script>
 
-<div style="max-width: 700px; margin: 0 auto">
+<div class="max-w-md m-auto">
 	<P>uuid: {$uuid}</P>
 	<Button on:click={genId}>Generate ID</Button>
 </div>
