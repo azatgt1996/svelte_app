@@ -6,11 +6,12 @@
 	import PlusOutline from 'flowbite-svelte-icons/PlusOutline.svelte';
 	import toast from 'svelte-french-toast';
 	import type { Option } from '../../types/interfaces';
+	import { showConfirm } from '../../util/interaction'
 
 	let modal = false;
 	let search = '';
 
-	type Car = { id: number; maker: string; type: string; make: number };
+	type Car = { id: number; name: string; type: string; year: number };
 
 	const types: Option[] = [
 		{ name: 'Sport', value: 'sport' },
@@ -21,17 +22,18 @@
 	let form: Car;
 
 	let rows: Car[] = [
-		{ id: 1, maker: 'Toyota', type: 'sport', make: 2017 },
-		{ id: 2, maker: 'Ford', type: 'sedan', make: 2018 },
-		{ id: 3, maker: 'Volvo', type: 'hatchback', make: 2019 },
-		{ id: 4, maker: 'Saab', type: 'sport', make: 2020 }
+		{ id: 1, name: 'Toyota', type: 'sport', year: 2017 },
+		{ id: 2, name: 'Ford', type: 'sedan', year: 2018 },
+		{ id: 3, name: 'Volvo', type: 'hatchback', year: 2019 },
+		{ id: 4, name: 'Saab', type: 'sport', year: 2020 }
 	];
 
 	let lastId = 4;
 
-	$: filtered = rows.filter((row) => row.maker.toLowerCase().includes(search.toLowerCase()));
+	$: filtered = rows.filter((row) => row.name.toLowerCase().includes(search.toLowerCase()));
 
-	function onDelete(row: Car) {
+	async function onDelete(row: Car) {
+		if (!await showConfirm()) return
 		rows = rows.filter((el) => el.id != row.id);
 		toast.success('Car deleted');
 	}
@@ -40,7 +42,7 @@
 
 	function openModal(row?: Car) {
 		if (row) form = row;
-		else form = { id: -1, maker: '', type: '', make: 2020 };
+		else form = { id: -1, name: '', type: '', year: 2020 };
 
 		isNew = !!row;
 
@@ -81,9 +83,9 @@
 	<Table hoverable={true}>
 		<TableHead class="dark:bg-gray-900">
 			<TableHeadCell>ID</TableHeadCell>
-			<TableHeadCell>Maker</TableHeadCell>
+			<TableHeadCell>Name</TableHeadCell>
 			<TableHeadCell>Type</TableHeadCell>
-			<TableHeadCell>Make</TableHeadCell>
+			<TableHeadCell>Year</TableHeadCell>
 			<TableHeadCell>
 				<span class="sr-only">Edit</span>
 			</TableHeadCell>
@@ -95,11 +97,11 @@
 			{#each filtered as row}
 				<TableBodyRow>
 					<TableBodyCell>{row.id}</TableBodyCell>
-					<TableBodyCell>{row.maker}</TableBodyCell>
+					<TableBodyCell>{row.name}</TableBodyCell>
 					<TableBodyCell>
 						<Badge rounded large color="blue">{row.type}</Badge>
 					</TableBodyCell>
-					<TableBodyCell>{row.make}</TableBodyCell>
+					<TableBodyCell>{row.year}</TableBodyCell>
 					<TableBodyCell>
 						<div id={'more-' + row.id}>
 							<DotsHorizontalSolid />
@@ -116,23 +118,15 @@
 
 	<Modal class="max-w-md" title={isNew ? 'Editing car' : 'New car'} bind:open={modal}>
 		<form on:submit={onSave}>
-			<Label class="mb-2"
-				>Maker
-				<Input bind:value={form.maker} required />
+			<Label class="mb-2">Car name
+				<Input bind:value={form.name} required />
 			</Label>
-			<Label class="mb-2"
-				>Make
-				<Input bind:value={form.make} type="number" required />
+			<Label class="mb-2">Year
+				<Input bind:value={form.year} type="number" required />
 			</Label>
-			<Label
-				>Type
-				<Select
-					class="mb-2"
-					placeholder="Choose type"
-					items={types}
-					bind:value={form.type}
-					required
-				/>
+			<Label>Type
+				<Select	class="mb-2" placeholder="Choose type" items={types}
+								bind:value={form.type} required/>
 			</Label>
 			<Button class="mt-3" type="submit">Save</Button>
 		</form>

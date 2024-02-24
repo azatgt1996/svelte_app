@@ -4,6 +4,7 @@
 	import { Navbar, NavBrand, NavUl, NavLi, DarkMode, P, Avatar,
            Dropdown, DropdownHeader, DropdownItem, DropdownDivider } from 'flowbite-svelte';
 	import { Toaster } from 'svelte-french-toast';
+	import ConfirmModal from '../components/ConfirmModal.svelte';
 
 	$: activeUrl = $page.url.pathname;
 </script>
@@ -35,7 +36,8 @@
   </Dropdown>
 </Navbar>
 
-<Toaster position="top-end"/>
+<Toaster position="top-end" />
+<ConfirmModal />
 <div class="pt-20">
   <slot />
 </div>
