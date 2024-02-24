@@ -14,12 +14,12 @@
 		skills: []
 	};
 
-	const langs: Array<Option> = [
+	const langs: Option[] = [
 		{ name: 'English', value: 'EN' },
 		{ name: 'Russian', value: 'RU' }
 	];
 
-	const skills: Array<Option> = [
+	const skills: Option[] = [
 		{ name: 'Java', value: 'java' },
 		{ name: 'Svelte', value: 'svelte' },
 		{ name: 'Kotlin', value: 'kotlin' }
