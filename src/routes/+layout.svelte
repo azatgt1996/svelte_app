@@ -1,10 +1,10 @@
 <script>
 	import '../app.pcss';
 	import { page } from '$app/stores';
-	import { Navbar, NavBrand, NavUl, NavLi, DarkMode, P, Avatar,
-           Dropdown, DropdownHeader, DropdownItem, DropdownDivider } from 'flowbite-svelte';
+	import { Navbar, NavBrand, NavUl, NavLi, DarkMode, P, Avatar } from 'flowbite-svelte';
+  import { Dropdown, DropdownHeader, DropdownItem, DropdownDivider } from 'flowbite-svelte';
 	import { Toaster } from 'svelte-french-toast';
-	import ConfirmModal from '../components/ConfirmModal.svelte';
+	import InteractionModals from '../components/InteractionModals.svelte';
 
 	$: activeUrl = $page.url.pathname;
 </script>
@@ -37,7 +37,7 @@
 </Navbar>
 
 <Toaster position="top-end" />
-<ConfirmModal />
+<InteractionModals/>
 <div class="pt-20">
   <slot />
 </div>

@@ -20,13 +20,14 @@ Password input with eye icon
     ```
 -->
 <Input bind:value type={show ? 'text' : 'password'} placeholder="••••••••" {required}>
-	<button slot="left" class="pointer-events-auto" tabindex="-1"
-          title={(show ? 'Hide' : 'Show') + ' password'}
-          on:click|preventDefault={() => (show = !show)}>
+	<div slot="left" class="pointer-events-auto"
+			 tabindex="-1" role="button" aria-hidden="true"
+       title={(show ? 'Hide' : 'Show') + ' password'}
+       on:click|preventDefault|stopPropagation={() => (show = !show)}>
 		{#if show}
 			<EyeOutline />
 		{:else}
 			<EyeSlashOutline />
 		{/if}
-	</button>
+  </div>
 </Input>

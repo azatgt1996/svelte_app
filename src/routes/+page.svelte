@@ -54,7 +54,7 @@
 			<Select class="mb-2" placeholder="Choose language" items={langs} bind:value={form.lang} required />
 		</Label>
 		<Label>Skills
-			<MultiSelect class="mb-2" items={skills} bind:value={form.skills} />
+			<MultiSelect class="mb-2 bg-gray-50 dark:bg-gray-700" items={skills} bind:value={form.skills}/>
 		</Label>
 		<Label>About
 			<Textarea class="mb-2" bind:value={form.about} placeholder="Type to yourself" required />

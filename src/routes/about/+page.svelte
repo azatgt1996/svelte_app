@@ -3,18 +3,18 @@
 	import { uuid } from '../../stores/globalStore';
 	import { Button, P } from 'flowbite-svelte';
 	import { showConfirm, showPrompt } from '../../util/interaction';
+	import toast from 'svelte-french-toast';
 	
-
 	const genId = () => ($uuid = nanoid());
 
 	async function testConfirm() {
 		let res = await showConfirm();
-		console.log(res);
+		toast.success(res.toString());
 	}
 
 	async function testPrompt() {
 		let res = await showPrompt();
-		console.log(res);
+		toast.success(res?.toString() ?? 'null');
 	}
 </script>
 

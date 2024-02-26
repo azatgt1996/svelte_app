@@ -18,13 +18,15 @@ export const noClick = () => confirmResolve(false)
 
 export const promptModal = writable(false)
 export const promptText = writable('')
+export const promptHint = writable('')
 export const promptValue = writable('')
 
 let promptResolve = new Function();
 
-export function showPrompt(text = 'Type value') {
+export function showPrompt(title = 'Some title', hint = 'Some hint') {
   promptValue.set('');
-  promptText.set(text);
+  promptText.set(title);
+  promptHint.set(hint);
   promptModal.set(true);
   return new Promise(_reslove => promptResolve = _reslove)
 }

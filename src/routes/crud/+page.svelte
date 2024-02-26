@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { TableBody, TableBodyCell, TableBodyRow, TableHead, Label, Select, TableHeadCell,
-					 Table, P, Button, Input, Popover, Modal, Badge } from 'flowbite-svelte';
-	import SearchOutline from 'flowbite-svelte-icons/SearchOutline.svelte';
-	import DotsHorizontalSolid from 'flowbite-svelte-icons/DotsHorizontalSolid.svelte';
-	import PlusOutline from 'flowbite-svelte-icons/PlusOutline.svelte';
+	import { TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, Table } from 'flowbite-svelte';
+	import { Label, Select, P, Button, Input, Popover, Modal, Badge, Search, Checkbox } from 'flowbite-svelte';
+	import { PlusOutline, DotsHorizontalSolid, EditOutline, TrashBinOutline } from 'flowbite-svelte-icons';
 	import toast from 'svelte-french-toast';
 	import type { Option } from '../../types/interfaces';
 	import { showConfirm } from '../../util/interaction'
 
 	let modal = false;
 	let search = '';
+
+	const onChange = (e: Event) => search = (e.target as HTMLInputElement).value
 
 	type Car = { id: number; name: string; type: string; year: number };
 
@@ -63,25 +63,26 @@
 		toast.success('Car saved');
 		modal = false;
 	}
+
+	let selected: number[] = []
 </script>
 
 <div class="m-auto max-w-xl">
-	<P weight="bold" size="2xl" class="mb-2">
-		Our cars
-		<br />
-		<div class="inline-flex gap-3">
-			<Button color="light" size="xs" on:click={() => openModal()}>
-				<PlusOutline size="xs" class="me-2" />
-				Add
-			</Button>
-			<!-- <Button color="light" size="xs">Delete</Button> -->
-			<Input on:change={(e) => (search = e.target.value)} placeholder="Search..." size="sm">
-				<SearchOutline slot="left" />
-			</Input>
-		</div>
-	</P>
-	<Table hoverable={true}>
+	<Table shadow>
+		<caption class="ml-3">
+			<P weight="bold" size="2xl" class="mb-2">Our cars</P>
+			<div class="inline-flex gap-3 w-full mb-1">
+				<Button color="light" size="xs" on:click={() => openModal()}>
+					<PlusOutline size="xs" class="me-2" />
+					Add
+				</Button>
+				<Search on:change={onChange} size="sm" class="w-50"/>
+			</div>
+		</caption>
 		<TableHead class="dark:bg-gray-900">
+			<TableHeadCell class="!p-4">
+				<Checkbox />
+			</TableHeadCell>
 			<TableHeadCell>ID</TableHeadCell>
 			<TableHeadCell>Name</TableHeadCell>
 			<TableHeadCell>Type</TableHeadCell>
@@ -94,8 +95,11 @@
 			{#if filtered.length == 0}
 				<P class="mt-2">Table data is empty</P>
 			{/if}
-			{#each filtered as row}
+			{#each filtered as row (row.id)}
 				<TableBodyRow>
+					<TableHeadCell class="!p-4">
+						<Checkbox value={row.id} bind:group={selected}/>
+					</TableHeadCell>
 					<TableBodyCell>{row.id}</TableBodyCell>
 					<TableBodyCell>{row.name}</TableBodyCell>
 					<TableBodyCell>
@@ -107,8 +111,14 @@
 							<DotsHorizontalSolid />
 						</div>
 						<Popover triggeredBy={'#more-' + row.id} placement="left">
-							<button class="mb-1 block" on:click={() => openModal(row)}>Edit</button>
-							<button class="block" on:click={() => onDelete(row)}>Delete</button>
+							<button class="mb-1 block" on:click={() => openModal(row)}>
+								<EditOutline class="inline pb-1"/>
+								Edit
+							</button>
+							<button class="block" on:click={() => onDelete(row)}>
+								<TrashBinOutline class="inline pb-1"/>
+								Delete
+							</button>
 						</Popover>
 					</TableBodyCell>
 				</TableBodyRow>
@@ -121,12 +131,12 @@
 			<Label class="mb-2">Car name
 				<Input bind:value={form.name} required />
 			</Label>
-			<Label class="mb-2">Year
-				<Input bind:value={form.year} type="number" required />
-			</Label>
 			<Label>Type
 				<Select	class="mb-2" placeholder="Choose type" items={types}
 								bind:value={form.type} required/>
+			</Label>
+			<Label class="mb-2">Year
+				<Input bind:value={form.year} type="number" required />
 			</Label>
 			<Button class="mt-3" type="submit">Save</Button>
 		</form>
