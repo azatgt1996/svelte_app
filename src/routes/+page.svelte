@@ -50,14 +50,14 @@
 		<Label class="mb-2">Birth date
 			<Input bind:value={form.birthDate} type="date" placeholder="Input date" required />
 		</Label>
-		<Label>Language
-			<Select class="mb-2" placeholder="Choose language" items={langs} bind:value={form.lang} required />
+		<Label class="mb-2">Language
+			<Select bind:value={form.lang} items={langs} placeholder="Choose language" required />
 		</Label>
 		<Label>Skills
 			<MultiSelect class="mb-2 bg-gray-50 dark:bg-gray-700" items={skills} bind:value={form.skills}/>
 		</Label>
-		<Label>About
-			<Textarea class="mb-2" bind:value={form.about} placeholder="Type to yourself" required />
+		<Label class="mb-2">About
+			<Textarea bind:value={form.about} placeholder="Type to yourself" required />
 		</Label>
 		<Checkbox class="mb-6" required>
 			I agree with the <A class="ml-1" href="/">terms and conditions</A>.

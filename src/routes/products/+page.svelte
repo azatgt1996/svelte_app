@@ -16,9 +16,8 @@
 </script>
 
 <div class="max-w-md m-auto">
-	<Label
-		>Products count
-		<Select class="mb-5" items={sizes} bind:value={$size} />
+	<Label class="mb-5">Products count
+		<Select bind:value={$size} items={sizes}/>
 	</Label>
 	{#await promise}
 		<Spinner class="m-auto" />

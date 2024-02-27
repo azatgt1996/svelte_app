@@ -68,7 +68,7 @@
 </script>
 
 <div class="m-auto max-w-xl">
-	<Table shadow>
+	<Table shadow class="table-fixed">
 		<caption class="ml-3">
 			<P weight="bold" size="2xl" class="mb-2">Our cars</P>
 			<div class="inline-flex gap-3 w-full mb-1">
@@ -80,24 +80,22 @@
 			</div>
 		</caption>
 		<TableHead class="dark:bg-gray-900">
-			<TableHeadCell class="!p-4">
+			<TableHeadCell class="w-10">
 				<Checkbox />
 			</TableHeadCell>
-			<TableHeadCell>ID</TableHeadCell>
+			<TableHeadCell class="w-14">ID</TableHeadCell>
 			<TableHeadCell>Name</TableHeadCell>
-			<TableHeadCell>Type</TableHeadCell>
-			<TableHeadCell>Year</TableHeadCell>
-			<TableHeadCell>
-				<span class="sr-only">Edit</span>
-			</TableHeadCell>
+			<TableHeadCell class="w-28">Type</TableHeadCell>
+			<TableHeadCell class="w-20">Year</TableHeadCell>
+			<TableHeadCell class="w-16"/>
 		</TableHead>
 		<TableBody>
 			{#if filtered.length == 0}
-				<P class="mt-2">Table data is empty</P>
+				<P class="m-2 min-w-56">Table data is empty</P>
 			{/if}
 			{#each filtered as row (row.id)}
 				<TableBodyRow>
-					<TableHeadCell class="!p-4">
+					<TableHeadCell>
 						<Checkbox value={row.id} bind:group={selected}/>
 					</TableHeadCell>
 					<TableBodyCell>{row.id}</TableBodyCell>
@@ -129,14 +127,13 @@
 	<Modal class="max-w-md" title={isNew ? 'Editing car' : 'New car'} bind:open={modal}>
 		<form on:submit={onSave}>
 			<Label class="mb-2">Car name
-				<Input bind:value={form.name} required />
+				<Input bind:value={form.name} required maxlength="10" minlength="3"/>
 			</Label>
-			<Label>Type
-				<Select	class="mb-2" placeholder="Choose type" items={types}
-								bind:value={form.type} required/>
+			<Label class="mb-2">Type
+				<Select bind:value={form.type} items={types} placeholder="Choose type" required/>
 			</Label>
 			<Label class="mb-2">Year
-				<Input bind:value={form.year} type="number" required />
+				<Input bind:value={form.year} type="number" required min="1999" max="2024"/>
 			</Label>
 			<Button class="mt-3" type="submit">Save</Button>
 		</form>
