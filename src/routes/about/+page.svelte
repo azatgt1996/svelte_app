@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { nanoid } from 'nanoid';
 	import { uuid } from '../../stores/globalStore';
-	import { Button, P, Label, Input } from 'flowbite-svelte';
+	import { Button, P } from 'flowbite-svelte';
 	import { showConfirm, showPrompt } from '../../util/interaction';
 	import toast from 'svelte-french-toast';
 	import { getById } from '../../util/api'
+	import { UiInput, UiNumber } from '../../components';
 	
 	const genId = () => ($uuid = nanoid());
 
@@ -26,16 +27,10 @@
 	<Button on:click={testPrompt}>Show prompt</Button>
 
 	<form class="mt-4">
-		<div class="flex mb-2">
-			<Label class="me-2">Login
-				<Input placeholder="john" required />
-			</Label>
-			<Label>Email
-				<Input type="email" placeholder="john@gmail.com" required />
-			</Label>
+		<div class="flex gap-4">
+			<UiInput label="Login" placeholder="john" required/>
+			<UiInput label="Email" type="email" placeholder="john@gmail.com" required/>
 		</div>
-		<Label class="mb-2">Age
-			<Input placeholder="18" type="number" required />
-		</Label>
+		<UiNumber label="Age" placeholder="18" required min="10"/>
 	</form>
 </div>

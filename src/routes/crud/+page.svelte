@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, Table } from 'flowbite-svelte';
-	import { Label, Select, P, Button, Input, Popover, Modal, Badge, Search, Checkbox } from 'flowbite-svelte';
+	import { P, Button, Popover, Modal, Badge, Search, Checkbox } from 'flowbite-svelte';
 	import { PlusOutline, DotsHorizontalSolid, EditOutline, TrashBinOutline } from 'flowbite-svelte-icons';
 	import toast from 'svelte-french-toast';
 	import type { Option } from '../../types/interfaces';
 	import { showConfirm } from '../../util/interaction'
+	import { UiInput, UiNumber, UiSelect } from '../../components';
 
 	let modal = false;
 	let search = '';
@@ -20,6 +21,7 @@
 	];
 
 	let form: Car;
+	const newForm: Car = { id: -1, name: '', type: '', year: 2020 };
 
 	let rows: Car[] = [
 		{ id: 1, name: 'Toyota', type: 'sport', year: 2017 },
@@ -41,11 +43,8 @@
 	let isNew = false;
 
 	function openModal(row?: Car) {
-		if (row) form = row;
-		else form = { id: -1, name: '', type: '', year: 2020 };
-
-		isNew = !!row;
-
+		form = row ?? newForm;
+		isNew = !row;
 		modal = true;
 	}
 
@@ -65,6 +64,10 @@
 	}
 
 	let selected: number[] = []
+
+	let mainCB = false
+	// $: selected = mainCB ? filtered.map(el => el.id) : []
+	$: if (mainCB) selected = filtered.map(el => el.id)
 </script>
 
 <div class="m-auto max-w-xl">
@@ -81,7 +84,7 @@
 		</caption>
 		<TableHead class="dark:bg-gray-900">
 			<TableHeadCell class="w-10">
-				<Checkbox />
+				<Checkbox bind:checked={mainCB}/>
 			</TableHeadCell>
 			<TableHeadCell class="w-14">ID</TableHeadCell>
 			<TableHeadCell>Name</TableHeadCell>
@@ -108,7 +111,7 @@
 						<div id={'more-' + row.id}>
 							<DotsHorizontalSolid />
 						</div>
-						<Popover triggeredBy={'#more-' + row.id} placement="left">
+						<Popover triggeredBy={'#more-' + row.id} placement="left" arrow={false}>
 							<button class="mb-1 block" on:click={() => openModal(row)}>
 								<EditOutline class="inline pb-1"/>
 								Edit
@@ -123,18 +126,13 @@
 			{/each}
 		</TableBody>
 	</Table>
+	selected: {selected}
 
-	<Modal class="max-w-md" title={isNew ? 'Editing car' : 'New car'} bind:open={modal}>
+	<Modal class="max-w-md" title={isNew ? 'New car' : 'Editing car'} bind:open={modal}>
 		<form on:submit={onSave}>
-			<Label class="mb-2">Car name
-				<Input bind:value={form.name} required maxlength="10" minlength="3"/>
-			</Label>
-			<Label class="mb-2">Type
-				<Select bind:value={form.type} items={types} placeholder="Choose type" required/>
-			</Label>
-			<Label class="mb-2">Year
-				<Input bind:value={form.year} type="number" required min="1999" max="2024"/>
-			</Label>
+			<UiInput label="Car name" bind:value={form.name} required maxlength="10" minlength="3"/>
+			<UiSelect label="Type" bind:value={form.type} items={types} placeholder="Choose type" required/>
+			<UiNumber label="Year" bind:value={form.year} required min="1999" max="2024"/>
 			<Button class="mt-3" type="submit">Save</Button>
 		</form>
 	</Modal>

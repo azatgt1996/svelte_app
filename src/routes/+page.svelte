@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Input, Select, Textarea, Checkbox, A, Label, Button, MultiSelect } from 'flowbite-svelte';
+	import { Checkbox, A, Button } from 'flowbite-svelte';
   import type { Option, User } from '../types/interfaces'
-  import UiPassword from '../components/UiPassword.svelte'
+  import { UiInput, UiPassword, UiSelect, UiMultiSelect, UiTextarea } from '../components'
 
 	let form: User = {
 		login: '',
@@ -35,33 +35,18 @@
 
 <div class="max-w-sm m-auto">
 	<form on:submit={submit}>
-		<Label class="mb-2">Login
-			<Input bind:value={form.login} placeholder="john" required />
-		</Label>
-		<Label class="mb-2">Email
-			<Input bind:value={form.email} type="email" placeholder="john@gmail.com" required />
-		</Label>
-		<Label class="mb-2">Password
-			<UiPassword bind:value={form.password} required />
-		</Label>
-		<Label class="mb-2">Confirm password
-			<UiPassword bind:value={form.password2} required />
-		</Label>
-		<Label class="mb-2">Birth date
-			<Input bind:value={form.birthDate} type="date" placeholder="Input date" required />
-		</Label>
-		<Label class="mb-2">Language
-			<Select bind:value={form.lang} items={langs} placeholder="Choose language" required />
-		</Label>
-		<Label>Skills
-			<MultiSelect class="mb-2 bg-gray-50 dark:bg-gray-700" items={skills} bind:value={form.skills}/>
-		</Label>
-		<Label class="mb-2">About
-			<Textarea bind:value={form.about} placeholder="Type to yourself" required />
-		</Label>
+		<UiInput label="Login" bind:value={form.login} placeholder="john" required/>
+		<UiInput label="Email" bind:value={form.email} type="email" placeholder="john@mail.com" required/>
+		<UiPassword bind:value={form.password} required/>
+		<UiPassword label="Confirm password" bind:value={form.password2} required/>
+		<UiInput label="Birth date" bind:value={form.birthDate} type="date" required/>
+		<UiSelect label="Language" bind:value={form.lang} items={langs} placeholder="Choose language" required/>
+		<UiMultiSelect label="Skills" items={skills} bind:value={form.skills}/>
+		<UiTextarea label="About" bind:value={form.about} placeholder="Type to yourself" required/>
 		<Checkbox class="mb-6" required>
 			I agree with the <A class="ml-1" href="/">terms and conditions</A>.
 		</Checkbox>
+		
 		<Button type="submit">Submit</Button>
 		<Button class="ml-5" type="reset" color="light">Reset</Button>
 	</form>

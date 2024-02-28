@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { Input } from 'flowbite-svelte';
+	import { Input, Label } from 'flowbite-svelte';
 	import EyeOutline from 'flowbite-svelte-icons/EyeOutline.svelte';
 	import EyeSlashOutline from 'flowbite-svelte-icons/EyeSlashOutline.svelte';
 
-	/** model value */
 	export let value = '';
+	export let label = 'Password';
 	export let required = false;
 
 	let show = false;
@@ -19,15 +19,17 @@ Password input with eye icon
   <UiPassword bind:value={password}>
     ```
 -->
-<Input bind:value type={show ? 'text' : 'password'} placeholder="••••••••" {required}>
-	<div slot="left" class="pointer-events-auto"
-			 tabindex="-1" role="button" aria-hidden="true"
-       title={(show ? 'Hide' : 'Show') + ' password'}
-       on:click|preventDefault|stopPropagation={() => (show = !show)}>
-		{#if show}
-			<EyeOutline />
-		{:else}
-			<EyeSlashOutline />
-		{/if}
-  </div>
-</Input>
+<Label class="mb-2">{label}
+	<Input bind:value type={show ? 'text' : 'password'} placeholder="••••••••" {required}>
+		<div slot="left" class="pointer-events-auto"
+				 tabindex="-1" role="button" aria-hidden="true"
+				 title={(show ? 'Hide' : 'Show') + ' password'}
+				 on:click|preventDefault|stopPropagation={() => (show = !show)}>
+			{#if show}
+				<EyeOutline />
+			{:else}
+				<EyeSlashOutline />
+			{/if}
+		</div>
+	</Input>
+</Label>

@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { Card, P, Spinner, Label, Select } from 'flowbite-svelte';
+	import { Card, P, Spinner } from 'flowbite-svelte';
 	import { size } from '../../stores/globalStore';
 	import type { Product } from '../../types/interfaces';
 	import { getAll } from '../../util/api';
+	import { UiSelect } from '../../components'
 
 	const sizes = [
 		{ name: '3 products', value: 3 },
@@ -16,9 +17,7 @@
 </script>
 
 <div class="max-w-md m-auto">
-	<Label class="mb-5">Products count
-		<Select bind:value={$size} items={sizes}/>
-	</Label>
+	<UiSelect label="Products count" bind:value={$size} items={sizes} width="200px"/>
 	{#await promise}
 		<Spinner class="m-auto" />
 		<P>Products is loading ...</P>
