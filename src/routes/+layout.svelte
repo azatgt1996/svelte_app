@@ -9,9 +9,9 @@
 	$: activeUrl = $page.url.pathname;
 </script>
 
-<Navbar class="fixed z-[100]" color="dark" >
+<Navbar class="fixed z-[100] p-0" color="dark">
 	<NavBrand href="/">
-		<img src="favicon.png" class="me-3 h-9" alt="Logo" />
+		<img src="svelte.svg" class="me-3 h-9" alt="Logo"/>
 		<P size="2xl" weight="bold">MyApp</P>
 	</NavBrand>
 	<NavUl {activeUrl}>
@@ -21,7 +21,7 @@
 	</NavUl>
   <div class="inline-flex gap-5">
     <DarkMode/>
-    <Avatar id="avatar-menu" src="https://flowbite-svelte.com/images/profile-picture-3.webp" />
+    <Avatar id="avatar-menu" src="https://flowbite-svelte.com/images/profile-picture-3.webp"/>
   </div>
   <Dropdown placement="bottom" triggeredBy="#avatar-menu">
     <DropdownHeader>
@@ -31,13 +31,13 @@
     <DropdownItem>Dashboard</DropdownItem>
     <DropdownItem>Settings</DropdownItem>
     <DropdownItem>Earnings</DropdownItem>
-    <DropdownDivider />
+    <DropdownDivider/>
     <DropdownItem>Sign out</DropdownItem>
   </Dropdown>
 </Navbar>
 
-<Toaster position="top-end" />
+<Toaster position="top-end"/>
 <InteractionModals/>
-<div class="pt-20">
+<div class="pt-16">
   <slot />
 </div>

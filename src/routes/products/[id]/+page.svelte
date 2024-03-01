@@ -16,7 +16,7 @@
 </script>
 
 <div class="max-w-md m-auto">
-	<Button class="mb-1 mt-1" href="/products">
+	<Button href="/products" size="xs">
 		<ArrowLeft class="me-3"/>
 		Go back
 	</Button>

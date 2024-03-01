@@ -128,11 +128,11 @@
 	</Table>
 	selected: {selected}
 
-	<Modal class="max-w-md" title={isNew ? 'New car' : 'Editing car'} bind:open={modal}>
+	<Modal class="max-w-md" title="{isNew ? 'New' : 'Editing'} car" bind:open={modal}>
 		<form on:submit={onSave}>
 			<UiInput label="Car name" bind:value={form.name} required maxlength="10" minlength="3"/>
 			<UiSelect label="Type" bind:value={form.type} items={types} placeholder="Choose type" required/>
-			<UiNumber label="Year" bind:value={form.year} required min="1999" max="2024"/>
+			<UiNumber label="Year" bind:value={form.year} required min="1999" max={new Date().getFullYear()}/>
 			<Button class="mt-3" type="submit">Save</Button>
 		</form>
 	</Modal>

@@ -5,7 +5,7 @@
 	import { showConfirm, showPrompt } from '../../util/interaction';
 	import toast from 'svelte-french-toast';
 	import { getById } from '../../util/api'
-	import { UiInput, UiNumber } from '../../components';
+	import { UiInput, UiNumber, UiPassword } from '../../components';
 	
 	const genId = () => ($uuid = nanoid());
 
@@ -16,7 +16,8 @@
 
 	async function testPrompt() {
 		let res = await showPrompt();
-		toast.promise(getById('products', res), { loading: 'Receiving...', success: 'Product received', error: 'Error...' })
+		let props = { loading: 'Receiving...', success: 'Product received', error: 'Error...' };
+		toast.promise(getById('products', res), props)
 	}
 </script>
 
@@ -30,7 +31,11 @@
 		<div class="flex gap-4">
 			<UiInput label="Login" placeholder="john" required/>
 			<UiInput label="Email" type="email" placeholder="john@gmail.com" required/>
+			<UiPassword label="Pin code" placeholder="1234" maxlength={4}
+									pattern="{String.raw`\d{4}`}" required class="w-28"/>
 		</div>
+		<UiInput label="Price" type="range" min="0" max="9999"/>
 		<UiNumber label="Age" placeholder="18" required min="10"/>
+		<Button type="submit">Submit</Button>
 	</form>
 </div>

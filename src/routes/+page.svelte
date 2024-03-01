@@ -41,7 +41,7 @@
 		<UiPassword label="Confirm password" bind:value={form.password2} required/>
 		<UiInput label="Birth date" bind:value={form.birthDate} type="date" required/>
 		<UiSelect label="Language" bind:value={form.lang} items={langs} placeholder="Choose language" required/>
-		<UiMultiSelect label="Skills" items={skills} bind:value={form.skills}/>
+		<UiMultiSelect label="Skills" bind:value={form.skills} items={skills} required/>
 		<UiTextarea label="About" bind:value={form.about} placeholder="Type to yourself" required/>
 		<Checkbox class="mb-6" required>
 			I agree with the <A class="ml-1" href="/">terms and conditions</A>.
