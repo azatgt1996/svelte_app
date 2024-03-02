@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, Table } from 'flowbite-svelte';
 	import { P, Button, Popover, Modal, Badge, Search, Checkbox } from 'flowbite-svelte';
-	import { PlusOutline, DotsHorizontalSolid, EditOutline, TrashBinOutline } from 'flowbite-svelte-icons';
+	import { PlusOutline, DotsHorizontalSolid, EditOutline, TrashBinOutline, EyeOutline } from 'flowbite-svelte-icons';
 	import toast from 'svelte-french-toast';
 	import type { Option } from '../../types/interfaces';
 	import { showConfirm } from '../../util/interaction'
@@ -27,10 +27,15 @@
 		{ id: 1, name: 'Toyota', type: 'sport', year: 2017 },
 		{ id: 2, name: 'Ford', type: 'sedan', year: 2018 },
 		{ id: 3, name: 'Volvo', type: 'hatchback', year: 2019 },
-		{ id: 4, name: 'Saab', type: 'sport', year: 2020 }
+		{ id: 4, name: 'Saab', type: 'sport', year: 2020 },
+		{ id: 5, name: 'BMW', type: 'sport', year: 2021 },
+		{ id: 6, name: 'Mersedes', type: 'sport', year: 2010 },
+		{ id: 7, name: 'Mazda', type: 'hatchback', year: 2001 },
+		{ id: 8, name: 'Nissan', type: 'sedan', year: 2005 },
+		{ id: 9, name: 'Subaru', type: 'hatchback', year: 2020 },
 	];
 
-	let lastId = 4;
+	let lastId = rows.length;
 
 	$: filtered = rows.filter((row) => row.name.toLowerCase().includes(search.toLowerCase()));
 
@@ -40,11 +45,17 @@
 		toast.success('Car deleted');
 	}
 
-	let isNew = false;
+	let title = '';
+	let view = false;
+	const clone = (obj: Object) => JSON.parse(JSON.stringify(obj))
 
-	function openModal(row?: Car) {
-		form = row ?? newForm;
-		isNew = !row;
+	function openModal(row?: Car, _view = false) {
+		form = clone(row ?? newForm);
+		view = _view;
+
+		if (_view) title = 'Car card';
+		else title = `${!row ? 'New' : 'Editing'} car`;
+
 		modal = true;
 	}
 
@@ -52,18 +63,18 @@
 		if (form.id > 0) {
 			const index = rows.findIndex((el) => el.id == form.id);
 			rows[index] = form;
-			rows = rows;
 		} else {
 			form.id = ++lastId;
 			rows.push(form);
-			rows = rows;
 		}
-
+		rows = rows;
 		toast.success('Car saved');
 		modal = false;
 	}
 
 	let selected: number[] = []
+
+	const colors = { hatchback: 'blue', sedan: 'green', sport: 'red' };
 
 	let mainCB = false
 	// $: selected = mainCB ? filtered.map(el => el.id) : []
@@ -104,7 +115,7 @@
 					<TableBodyCell>{row.id}</TableBodyCell>
 					<TableBodyCell>{row.name}</TableBodyCell>
 					<TableBodyCell>
-						<Badge rounded large color="blue">{row.type}</Badge>
+						<Badge rounded large color={colors[row.type]}>{row.type}</Badge>
 					</TableBodyCell>
 					<TableBodyCell>{row.year}</TableBodyCell>
 					<TableBodyCell>
@@ -112,11 +123,15 @@
 							<DotsHorizontalSolid />
 						</div>
 						<Popover triggeredBy={'#more-' + row.id} placement="left" arrow={false}>
-							<button class="mb-1 block" on:click={() => openModal(row)}>
+							<button class="mb-1 block text-green-500" on:click={() => openModal(row, true)}>
+								<EyeOutline class="inline pb-1"/>
+								View
+							</button>
+							<button class="mb-1 block text-blue-500" on:click={() => openModal(row)}>
 								<EditOutline class="inline pb-1"/>
 								Edit
 							</button>
-							<button class="block" on:click={() => onDelete(row)}>
+							<button class="block text-red-500" on:click={() => onDelete(row)}>
 								<TrashBinOutline class="inline pb-1"/>
 								Delete
 							</button>
@@ -128,12 +143,16 @@
 	</Table>
 	selected: {selected}
 
-	<Modal class="max-w-md" title="{isNew ? 'New' : 'Editing'} car" bind:open={modal}>
+	<Modal class="max-w-md" {title} bind:open={modal}>
 		<form on:submit={onSave}>
-			<UiInput label="Car name" bind:value={form.name} required maxlength="10" minlength="3"/>
-			<UiSelect label="Type" bind:value={form.type} items={types} placeholder="Choose type" required/>
-			<UiNumber label="Year" bind:value={form.year} required min="1999" max={new Date().getFullYear()}/>
-			<Button class="mt-3" type="submit">Save</Button>
+			<fieldset disabled={view}>
+				<UiInput label="Car name" bind:value={form.name} required maxlength="10" minlength="3"/>
+				<UiSelect label="Type" bind:value={form.type} items={types} placeholder="Choose type" required/>
+				<UiNumber label="Year" bind:value={form.year} required min="1999" max={new Date().getFullYear()}/>
+			</fieldset>
+			{#if !view}
+			  <Button class="mt-3" type="submit">Save</Button>
+			{/if}
 		</form>
 	</Modal>
 </div>
