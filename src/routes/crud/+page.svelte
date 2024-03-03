@@ -3,9 +3,9 @@
 	import { P, Button, Popover, Modal, Badge, Search, Checkbox } from 'flowbite-svelte';
 	import { PlusOutline, DotsHorizontalSolid, EditOutline, TrashBinOutline, EyeOutline } from 'flowbite-svelte-icons';
 	import toast from 'svelte-french-toast';
-	import type { Option, Colors } from '../../types';
-	import { showConfirm } from '../../util/interaction'
-	import { UiInput, UiNumber, UiSelect } from '../../components';
+	import type { Option, Colors } from '@src/types';
+	import { showConfirm } from '@src/util/interaction'
+	import { UiInput, UiNumber, UiSelect } from '@src/components';
 
 	let modal = false;
 	let search = '';

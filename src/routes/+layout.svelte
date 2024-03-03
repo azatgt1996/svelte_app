@@ -4,7 +4,7 @@
 	import { Navbar, NavBrand, NavUl, NavLi, DarkMode, P, Avatar } from 'flowbite-svelte';
   import { Dropdown, DropdownHeader, DropdownItem, DropdownDivider } from 'flowbite-svelte';
 	import { Toaster } from 'svelte-french-toast';
-	import InteractionModals from '../components/InteractionModals.svelte';
+	import InteractionModals from '@src/components/InteractionModals.svelte';
 
 	$: activeUrl = $page.url.pathname;
 </script>
