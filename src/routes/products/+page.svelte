@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Card, P, Spinner } from 'flowbite-svelte';
 	import { size } from '../../stores/globalStore';
-	import type { Product } from '../../types/interfaces';
+	import type { Product } from '../../types';
 	import { getAll } from '../../util/api';
 	import { UiSelect } from '../../components'
 
@@ -12,7 +12,7 @@
 		{ name: '10 products', value: 10 }
 	];
 
-	let promise: Promise<Array<Product>>;
+	let promise: Promise<Product[]>;
 	$: promise = getAll('products', $size);
 </script>
 

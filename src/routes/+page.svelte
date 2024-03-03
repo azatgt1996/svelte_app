@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Checkbox, A, Button } from 'flowbite-svelte';
-  import type { Option, User } from '../types/interfaces'
+  import type { Option, User } from '../types'
   import { UiInput, UiPassword, UiSelect, UiMultiSelect, UiTextarea } from '../components'
 
 	let form: User = {

@@ -3,7 +3,7 @@
 	import { P, Button, Popover, Modal, Badge, Search, Checkbox } from 'flowbite-svelte';
 	import { PlusOutline, DotsHorizontalSolid, EditOutline, TrashBinOutline, EyeOutline } from 'flowbite-svelte-icons';
 	import toast from 'svelte-french-toast';
-	import type { Option } from '../../types/interfaces';
+	import type { Option, Colors } from '../../types';
 	import { showConfirm } from '../../util/interaction'
 	import { UiInput, UiNumber, UiSelect } from '../../components';
 
@@ -74,7 +74,7 @@
 
 	let selected: number[] = []
 
-	const colors = { hatchback: 'blue', sedan: 'green', sport: 'red' };
+	const colors: Record<string, Colors> = { hatchback: 'blue', sedan: 'green', sport: 'red' };
 
 	let mainCB = false
 	// $: selected = mainCB ? filtered.map(el => el.id) : []

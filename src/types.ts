@@ -1,4 +1,4 @@
-export interface Product {
+export type Product = {
   id: number,
   title: string,
   description: string,
@@ -6,12 +6,12 @@ export interface Product {
   image: string,
 }
 
-export interface Option {
+export type Option = {
   name: string,
   value: string,
 }
 
-export interface User {
+export type User = {
   login: string,
   email: string,
   password: string,
@@ -19,5 +19,7 @@ export interface User {
   birthDate: string,
   about: string,
   lang: string,
-  skills: Array<string>,
+  skills: string[],
 }
+
+export type Colors = 'red'|'yellow'|'green'|'indigo'|'purple'|'pink'|'blue'|'dark'|'primary'|'none'
