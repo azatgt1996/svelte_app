@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Card, P, Spinner } from 'flowbite-svelte';
-	import { size } from '@src/stores/globalStore';
-	import type { Product } from '@src/types';
-	import { getAll } from '@src/util/api';
-	import { UiSelect } from '@src/components'
+	import { size } from '@/stores/globalStore';
+	import type { Product } from '@/types';
+	import { getAll } from '@/util/api';
+	import { UiSelect } from '@/components'
 
 	const sizes = [
 		{ name: '3 products', value: 3 },

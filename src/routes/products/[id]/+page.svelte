@@ -2,8 +2,8 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { Card, P, Button } from 'flowbite-svelte';
-	import type { Product } from '@src/types';
-	import { getById } from '@src/util/api';
+	import type { Product } from '@/types';
+	import { getById } from '@/util/api';
 	import ArrowLeft from 'flowbite-svelte-icons/ArrowLeftOutline.svelte'
 
 	let id = $page.params.id;

@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { nanoid } from 'nanoid';
-	import { uuid } from '@src/stores/globalStore';
+	import { uuid } from '@/stores/globalStore';
 	import { Button, P, Tabs, TabItem } from 'flowbite-svelte';
-	import { showConfirm, showPrompt } from '@src/util/interaction';
+	import { showConfirm, showPrompt } from '@/util/interaction';
 	import toast from 'svelte-french-toast';
-	import { getById } from '@src/util/api'
-	import { UiInput, UiNumber, UiPassword } from '@src/components';
+	import { getById } from '@/util/api'
+	import { UiInput, UiNumber, UiPassword } from '@/components';
 	
 	const genId = () => ($uuid = nanoid());
 
