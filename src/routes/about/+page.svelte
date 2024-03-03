@@ -5,7 +5,7 @@
 	import { showConfirm, showPrompt } from '@/util/interaction';
 	import toast from 'svelte-french-toast';
 	import { getById } from '@/util/api'
-	import { UiInput, UiNumber, UiPassword } from '@/components';
+	import { UiInput, UiNumber, UiPassword, UiDate } from '@/components';
 	
 	const genId = () => ($uuid = nanoid());
 
@@ -27,7 +27,7 @@
 		price: 100,
 		age: 20,
 		name: '',
-		date: new Date().toISOString().slice(0,16)
+		date: null
 	}
 </script>
 
@@ -52,7 +52,7 @@
 			</TabItem>
 			<TabItem title="Additional">
 				<UiInput bind:value={form.name} label="Name" placeholder="type anything..." required/>
-				<UiInput bind:value={form.date} label="Date" type="datetime-local" required/>
+				<UiDate bind:value={form.date} label="Date" required/>
 			</TabItem>
 		</Tabs>
 

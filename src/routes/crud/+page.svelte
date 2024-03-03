@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, Table } from 'flowbite-svelte';
 	import { P, Button, Popover, Modal, Badge, Search, Checkbox } from 'flowbite-svelte';
-	import { PlusOutline, DotsHorizontalSolid, EditOutline, TrashBinOutline, EyeOutline } from 'flowbite-svelte-icons';
+	import { DotsHorizontalSolid, EditOutline, TrashBinOutline, EyeOutline } from 'flowbite-svelte-icons';
 	import toast from 'svelte-french-toast';
 	import type { Option, Colors } from '@/types';
 	import { showConfirm } from '@/util/interaction'
-	import { UiInput, UiNumber, UiSelect } from '@/components';
+	import { UiBtn, UiInput, UiNumber, UiSelect } from '@/components';
 
 	let modal = false;
 	let search = '';
@@ -86,10 +86,7 @@
 		<caption class="ml-3">
 			<P weight="bold" size="2xl" class="mb-2">Our cars</P>
 			<div class="inline-flex gap-3 w-full mb-1">
-				<Button color="light" size="xs" on:click={() => openModal()}>
-					<PlusOutline size="xs" class="me-2" />
-					Add
-				</Button>
+				<UiBtn color="light" size="xs" name="Add" leftIcon="Plus" on:click={() => openModal()}/>
 				<Search on:change={onChange} size="sm" class="w-50"/>
 			</div>
 		</caption>

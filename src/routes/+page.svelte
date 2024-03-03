@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Checkbox, A, Button } from 'flowbite-svelte';
   import type { Option, User } from '@/types'
-  import { UiInput, UiPassword, UiSelect, UiMultiSelect, UiTextarea } from '@/components'
+  import { UiInput, UiPassword, UiSelect, UiMultiSelect, UiTextarea, UiDate } from '@/components'
 
 	let form: User = {
 		login: '',
@@ -39,7 +39,7 @@
 		<UiInput label="Email" bind:value={form.email} type="email" placeholder="john@mail.com" required/>
 		<UiPassword bind:value={form.password} required/>
 		<UiPassword label="Confirm password" bind:value={form.password2} required/>
-		<UiInput label="Birth date" bind:value={form.birthDate} type="date" required/>
+		<UiDate label="Birth date" bind:value={form.birthDate} required/>
 		<UiSelect label="Language" bind:value={form.lang} items={langs} placeholder="Choose language" required/>
 		<UiMultiSelect label="Skills" bind:value={form.skills} items={skills} required/>
 		<UiTextarea label="About" bind:value={form.about} placeholder="Type to yourself" required/>

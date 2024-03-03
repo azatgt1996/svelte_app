@@ -14,16 +14,16 @@ const config = {
       colors: {
         // flowbite-svelte
         primary: {
-          50: '#FFF5F2',
-          100: '#FFF1EE',
-          200: '#FFE4DE',
-          300: '#FFD5CC',
-          400: '#FFBCAD',
-          500: '#FE795D',
-          600: '#EF562F',
-          700: '#EB4F27',
-          800: '#CC4522',
-          900: '#A5371B'
+          50:  '#eff9ff',
+          100: '#dbf1fe',
+          200: '#bfe7fe',
+          300: '#92dafe',
+          400: '#5fc3fb',
+          500: '#3aa6f7',
+          600: '#2489ec',
+          700: '#1c71d8',
+          800: '#1d5cb0',
+          900: '#1d4f8b',
         }
       }
     }

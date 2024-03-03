@@ -18,6 +18,7 @@
 		<NavLi href="/about">About</NavLi>
 		<NavLi href="/products">Products</NavLi>
 		<NavLi href="/crud">Crud</NavLi>
+		<NavLi href="/schedule">Schedule</NavLi>
 	</NavUl>
   <div class="inline-flex gap-5">
     <DarkMode/>

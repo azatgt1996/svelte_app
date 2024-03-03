@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { Card, P, Button } from 'flowbite-svelte';
+	import { Card, P } from 'flowbite-svelte';
 	import type { Product } from '@/types';
 	import { getById } from '@/util/api';
-	import ArrowLeft from 'flowbite-svelte-icons/ArrowLeftOutline.svelte'
+	import { UiBtn } from '@/components';
 
 	let id = $page.params.id;
 
@@ -16,10 +16,7 @@
 </script>
 
 <div class="max-w-md m-auto">
-	<Button href="/products" size="xs">
-		<ArrowLeft class="me-3"/>
-		Go back
-	</Button>
+	<UiBtn href="/products" size="xs" name="Go back" leftIcon="ArrowLeft"/>
 	{#if product}
 		<Card img={product.image} class="mt-2">
 			<P size="2xl" weight="bold" color="text-blue-700">${product.price}</P>
