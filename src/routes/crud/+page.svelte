@@ -40,7 +40,7 @@
 	$: filtered = rows.filter((row) => row.name.toLowerCase().includes(search.toLowerCase()));
 
 	async function onDelete(row: Car) {
-		if (!await showConfirm()) return
+		if (!await showConfirm('Are you sure you wanna delete this record?')) return
 		rows = rows.filter((el) => el.id != row.id);
 		toast.success('Car deleted');
 	}
@@ -76,9 +76,23 @@
 
 	const colors: Record<string, Colors> = { hatchback: 'blue', sedan: 'green', sport: 'red' };
 
-	let mainCB = false
-	// $: selected = mainCB ? filtered.map(el => el.id) : []
-	$: if (mainCB) selected = filtered.map(el => el.id)
+	let checked = false, indeterminate = false
+
+	const checkAll = () => selected = checked ? filtered.map(el => el.id) : []
+
+	$: setTimeout(() => {
+		checked = (!!selected.length && selected.length === filtered.length)
+		indeterminate = (!!selected.length && selected.length < filtered.length)
+	}, 0)
+
+	async function deleteSelected() {
+		if (!await showConfirm('Are you sure you wanna delete the selected records?')) return;
+
+		rows = rows.filter((el) => !selected.includes(el.id));
+		toast.success('Cars deleted');
+		selected = [];
+	}
+
 </script>
 
 <div class="m-auto max-w-xl">
@@ -87,12 +101,14 @@
 			<P weight="bold" size="2xl" class="mb-2">Our cars</P>
 			<div class="inline-flex gap-3 w-full mb-1">
 				<UiBtn color="light" size="xs" name="Add" leftIcon="Plus" on:click={() => openModal()}/>
+				<UiBtn color="light" size="xs" name="Delete" leftIcon="Trash"
+							 on:click={() => deleteSelected()} disabled={!selected.length}/>
 				<Search on:change={onChange} size="sm" class="w-50"/>
 			</div>
 		</caption>
 		<TableHead class="dark:bg-gray-900">
 			<TableHeadCell class="w-10">
-				<Checkbox bind:checked={mainCB}/>
+				<Checkbox bind:checked={checked} {indeterminate} on:change={checkAll}/>
 			</TableHeadCell>
 			<TableHeadCell class="w-14">ID</TableHeadCell>
 			<TableHeadCell>Name</TableHeadCell>

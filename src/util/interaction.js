@@ -8,7 +8,7 @@ let confirmResolve = new Function();
 export function showConfirm(text = 'Are you sure?') {
   confirmText.set(text);
   confirmModal.set(true);
-  return new Promise(_reslove => confirmResolve = _reslove)
+  return new Promise(_resolve => confirmResolve = _resolve)
 }
 
 export const yesClick = () => confirmResolve(true)
@@ -28,7 +28,7 @@ export function showPrompt(title = 'Some title', hint = 'Some hint') {
   promptText.set(title);
   promptHint.set(hint);
   promptModal.set(true);
-  return new Promise(_reslove => promptResolve = _reslove)
+  return new Promise(_resolve => promptResolve = _resolve)
 }
 
 export const okClick = (value = '') => promptResolve(value)

@@ -1,8 +1,6 @@
 <script lang="ts">
-	import { P, Button } from 'flowbite-svelte';
+	import { P } from 'flowbite-svelte';
 	import { Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell } from 'flowbite-svelte';
-	import ArrowLeft from 'flowbite-svelte-icons/ArrowLeftOutline.svelte'
-	import ArrowRight from 'flowbite-svelte-icons/ArrowRightOutline.svelte'
 	import { UiDate, UiSelect, UiBtn } from '@/components';
 
 	const doctors = [
@@ -26,7 +24,8 @@
 		for (let i = 0; i < 7; i++) {
 			week.push({
 				name: new Date(curDate).toLocaleString('ru', { weekday: 'long' }),
-				value: new Date(curDate).toLocaleString().slice(0, 5),
+				dd_mm: new Date(curDate).toLocaleString().slice(0, 5),
+				value: new Date(curDate).toISOString().slice(0, 10),
 			});
 			curDate = new Date(curDate.setDate(curDate.getDate() + 1));
 		}
@@ -36,7 +35,7 @@
 	
 	$: weekDays = getWeek(form.date);
 
-	$: month = new Date(form.date).toLocaleString('ru', { month: 'long', year: 'numeric' }).toUpperCase()
+	$: month = new Date(form.date).toLocaleString('ru', { month: 'long', year: 'numeric' }).toUpperCase();
 
 	const changeWeek = (op: string) => {
 		let date = new Date(form.date);
@@ -45,27 +44,42 @@
 		form.date = date.toISOString().slice(0, 10);
 	}
 
+	const today = new Date().toISOString().slice(0, 10);
+
+	const schedule = [
+		{datetime: '2024-03-05T12:00', value: 'Удаление зуба у Жени'},
+		{datetime: '2024-03-07T15:00', value: 'Чистка зубов'},
+	];
+
+	function getItem(day: string, time: string) {
+		const datetime = `${day}T${time.length == 4 ? `0${time}` : time}`;
+		const item = schedule.find(item => item.datetime === datetime);
+		return item?.value ?? '';
+	}
+	
 </script>
 
 <div class="m-auto max-w-7xl">
-	<P align="center" weight="bold" size="2xl" class="mb-3">Расписание приема</P>
+	<P align="center" weight="medium" size="2xl" class="mb-3">Расписание приема</P>
 	<form class="m-auto max-w-2xl">
 		<div class="flex gap-10">
 			<UiDate bind:value={form.date} label="Календарь" class="w-40"/>
 			<UiSelect bind:value={form.doctor} label="Врач" placeholder="Выберите врача" items={doctors}/>
 		</div>
 		<div class="flex justify-between">
-			<UiBtn size="xs" color="light" name="Предыдущая неделя" leftIcon="ArrowLeft" on:click={() => changeWeek('prev')}/>
+			<UiBtn size="xs" color="light" name="Предыдущая неделя" leftIcon="ArrowLeft" on:click={()=> changeWeek('prev')}/>
 			<P height="loose">{month}</P>
-			<UiBtn size="xs" color="light" name="Следующая неделя" rightIcon="ArrowRight" on:click={() => changeWeek('next')}/>
+			<UiBtn size="xs" color="light" name="Следующая неделя" rightIcon="ArrowRight" on:click={()=> changeWeek('next')}/>
 		</div>
 	</form>
 	<Table shadow class="table-fixed mt-2" >
 		<TableHead class="dark:bg-gray-900">
 			<TableHeadCell class="w-12"></TableHeadCell>
 			{#each weekDays as day }
-				<TableHeadCell>
-					<span>{day.name}<br>{day.value}</span>
+				<TableHeadCell class="border-l dark:border-gray-700">
+					<span style={`color: ${day.value === today && '#1c71d8'}`}>
+						{day.name}<br>{day.dd_mm}
+					</span>
 				</TableHeadCell>
 			{/each}
 		</TableHead>
@@ -73,8 +87,10 @@
 			{#each times as time, index }
 				<TableBodyRow class={index % 2 == 0 ? 'border-b' : 'border-b-2'}>
 					<TableBodyCell class="py-1 px-1.5">{time}</TableBodyCell>
-					{#each weekDays as day, idx }
-						<TableBodyCell class="py-1"></TableBodyCell>
+					{#each weekDays as day }
+						<TableBodyCell class="py-1 border-l dark:border-gray-700 truncate">
+							{getItem(day.value, time)}
+						</TableBodyCell>
 					{/each}
 				</TableBodyRow>
 			{/each}
