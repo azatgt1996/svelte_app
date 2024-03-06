@@ -25,11 +25,11 @@
 
 		for (let i = 0; i < 7; i++) {
 			week.push({
-				name: dayjs(curDate).locale('ru').format('dddd'),
-				dd_mm: dayjs(curDate).format('DD.MM'),
-				value: dayjs(curDate).format('YYYY-MM-DD'),
+				name: curDate.locale('ru').format('dddd'),
+				dd_mm: curDate.format('DD.MM'),
+				value: curDate.format('YYYY-MM-DD'),
 			});
-			curDate = dayjs(curDate).add(1, 'day');
+			curDate = curDate.add(1, 'day');
 		}
 
 		return week;
