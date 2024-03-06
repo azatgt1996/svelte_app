@@ -3,6 +3,7 @@
 	import { P, Button, Popover, Modal, Badge, Search, Checkbox } from 'flowbite-svelte';
 	import { DotsHorizontalSolid, EditOutline, TrashBinOutline, EyeOutline } from 'flowbite-svelte-icons';
 	import toast from 'svelte-french-toast';
+	import dayjs from 'dayjs';
 	import type { Option, Colors } from '@/types';
 	import { showConfirm } from '@/util/interaction'
 	import { UiBtn, UiInput, UiNumber, UiSelect } from '@/components';
@@ -161,7 +162,7 @@
 			<fieldset disabled={view}>
 				<UiInput label="Car name" bind:value={form.name} required maxlength="10" minlength="3"/>
 				<UiSelect label="Type" bind:value={form.type} items={types} placeholder="Choose type" required/>
-				<UiNumber label="Year" bind:value={form.year} required min="1999" max={new Date().getFullYear()}/>
+				<UiNumber label="Year" bind:value={form.year} required min="1999" max={dayjs().year()}/>
 			</fieldset>
 			{#if !view}
 			  <Button class="mt-3" type="submit">Save</Button>

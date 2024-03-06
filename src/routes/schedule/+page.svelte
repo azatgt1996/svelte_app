@@ -2,6 +2,8 @@
 	import { P } from 'flowbite-svelte';
 	import { Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell } from 'flowbite-svelte';
 	import { UiDate, UiSelect, UiBtn } from '@/components';
+	import dayjs from 'dayjs';
+	import 'dayjs/locale/ru';
 
 	const doctors = [
 		{name: 'Иванов Иван', value: 1},
@@ -9,25 +11,25 @@
 		{name: 'Жуков Жук', value: 3},
 	]
 
-	const form = {
-		date: new Date().toISOString().slice(0, 10),
-		doctor: 1,
-	}
+	const today = dayjs().format('YYYY-MM-DD');
+	const weekStart = dayjs().locale('ru').startOf('week').format('YYYY-MM-DD');
+
+	const form = { date: weekStart, doctor: 1	}
 
 	const times = ['8:00','8:30', '9:00','9:30', '10:00','10:30', '11:00','11:30', '12:00','12:30',
 								 '13:00','13:30', '14:00','14:30', '15:00','15:30', '16:00','16:30', '17:00','17:30'];
 	
 	const getWeek = (date: string) => {
 		const week: any[] = [];
-		let curDate = new Date(date);
+		let curDate = dayjs(date);
 
 		for (let i = 0; i < 7; i++) {
 			week.push({
-				name: new Date(curDate).toLocaleString('ru', { weekday: 'long' }),
-				dd_mm: new Date(curDate).toLocaleString().slice(0, 5),
-				value: new Date(curDate).toISOString().slice(0, 10),
+				name: dayjs(curDate).locale('ru').format('dddd'),
+				dd_mm: dayjs(curDate).format('DD.MM'),
+				value: dayjs(curDate).format('YYYY-MM-DD'),
 			});
-			curDate = new Date(curDate.setDate(curDate.getDate() + 1));
+			curDate = dayjs(curDate).add(1, 'day');
 		}
 
 		return week;
@@ -35,16 +37,13 @@
 	
 	$: weekDays = getWeek(form.date);
 
-	$: month = new Date(form.date).toLocaleString('ru', { month: 'long', year: 'numeric' }).toUpperCase();
+	$: month = dayjs(form.date).locale('ru').format('MMMM YYYY').toUpperCase();
 
 	const changeWeek = (op: string) => {
-		let date = new Date(form.date);
-		const diff = op == 'next' ? 7 : -7;
-		date = new Date(date.setDate(date.getDate() + diff));
-		form.date = date.toISOString().slice(0, 10);
+		const diff = (op == 'next') ? 1 : -1;
+		const date = dayjs(form.date).add(diff, 'week');
+		form.date = dayjs(date).format('YYYY-MM-DD');
 	}
-
-	const today = new Date().toISOString().slice(0, 10);
 
 	const schedule = [
 		{datetime: '2024-03-05T12:00', value: 'Удаление зуба у Жени'},
@@ -89,7 +88,7 @@
 					<TableBodyCell class="py-1 px-1.5">{time}</TableBodyCell>
 					{#each weekDays as day }
 						<TableBodyCell class="py-1 border-l dark:border-gray-700 truncate">
-							{getItem(day.value, time)}
+							<span title={getItem(day.value, time)}>{getItem(day.value, time)}</span>
 						</TableBodyCell>
 					{/each}
 				</TableBodyRow>
